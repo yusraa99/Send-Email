@@ -26,7 +26,7 @@ Route::get('/sendEmail', [SendMailController::class, 'sendApi']);
 
 
 
-Route::group(['middleware'=> 'api', 'prefix'=>'auth'], function ($router) {
+Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], function ($router) {
    Route::post('/register', [AuthController::class, 'register']);
    Route::post('/login', [AuthController::class, 'login']);
    Route::get('/profile', [AuthController::class, 'profile']);

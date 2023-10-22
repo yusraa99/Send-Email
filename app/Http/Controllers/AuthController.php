@@ -46,7 +46,7 @@ class AuthController extends Controller
         }
 
         if(!$token=auth()->attempt($validator->validated())){
-            return response()->json(['error'=>'Unauthorized', ], 401);
+            return response()->json(['error'=>__('auth.Unauthorized') ], 401);
 
         }
         return $this->createNewToken($token);        
@@ -72,7 +72,7 @@ class AuthController extends Controller
         auth()->logout();
 
         return response()->json([
-            'message'=>'user successfully logged out'
+            'message'=>__('auth.Logout')
         ]);
     }
 }
