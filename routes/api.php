@@ -32,3 +32,9 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], f
    Route::get('/profile', [AuthController::class, 'profile']);
    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::group(['middleware'=>['api', 'SetAppLang', 'role:admin'], 'prefix'=>'{locale}/auth/admin'], function ($router) {
+    Route::post('/Dashboard', [AdminController::class, 'Dashboard']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/profile', [AuthController::class, 'profile']);
+ });
