@@ -5,7 +5,10 @@ use Auth;
 use Validator; 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Notification;
+use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
@@ -21,7 +24,10 @@ class AuthController extends Controller
             'email'=> 'required|string|email|unique:users', 
             'password'=> 'required|string|confirmed|min:6', 
         ]);
-
+        $Message=[
+            'title'=> 'Welcome Our Customer',
+            'body'=> 'New Register',
+        ];
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
@@ -29,6 +35,8 @@ class AuthController extends Controller
             $validator->validated(),
             ['password'=>bcrypt($request->password)]
         ))->assignRole('user');
+            $user->notify(new WelcomeNotification($Message));
+        // Notification::send($request->email, new WelcomeNotification($Message));
         return response()->json([
             'message'=>'user successfully registered',
             'user'=>$user, 
@@ -37,6 +45,10 @@ class AuthController extends Controller
     }
     
     public function login(Request $request) {
+        $Message=[
+            'title'=> 'Welcome',
+            'body'=> 'Hello',
+        ];
         $validator= Validator::make($request->all(),[
             'email'=> 'required|email', 
             'password'=> 'required|string|min:6', 
@@ -49,6 +61,10 @@ class AuthController extends Controller
             return response()->json(['error'=>__('auth.Unauthorized') ], 401);
 
         }
+        // Notification::send($request->email, new WelcomeNotification( $Message));
+        $users=auth()->user();
+        $users->notify(new WelcomeNotification($Message));
+        
         return $this->createNewToken($token);        
     }
 
@@ -63,7 +79,8 @@ class AuthController extends Controller
     }
 
     public function profile(){
-        return response()->json(['user'=>auth()->user()],200);
+        $user=auth()->user();
+        return response()->json(['user'=>auth()->user(), $user->getPermissionsViaRoles()],200);
 
     }
     
