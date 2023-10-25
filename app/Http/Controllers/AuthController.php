@@ -9,7 +9,7 @@ use App\Notifications\WelcomeNotification;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Permission;
-
+use App\Enums\UserStatus;
 class AuthController extends Controller
 {
 
@@ -33,9 +33,11 @@ class AuthController extends Controller
         }
         $user=User::create(array_merge(
             $validator->validated(),
-            ['password'=>bcrypt($request->password)]
+            ['password'=>bcrypt($request->password),
+            'status'=> UserStatus::Pending,],
+            
         ))->assignRole('user');
-            $user->notify(new WelcomeNotification($Message));
+        $user->notify(new WelcomeNotification($Message));
         // Notification::send($request->email, new WelcomeNotification($Message));
         return response()->json([
             'message'=>'user successfully registered',
@@ -51,7 +53,8 @@ class AuthController extends Controller
         ];
         $validator= Validator::make($request->all(),[
             'email'=> 'required|email', 
-            'password'=> 'required|string|min:6', 
+            'password'=> 'required|string|min:6',
+            
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -63,6 +66,10 @@ class AuthController extends Controller
         }
         // Notification::send($request->email, new WelcomeNotification( $Message));
         $users=auth()->user();
+        
+        $users->update([
+            'status'=> UserStatus::Active, 
+        ]);
         $users->notify(new WelcomeNotification($Message));
         
         return $this->createNewToken($token);        

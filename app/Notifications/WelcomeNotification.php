@@ -11,15 +11,15 @@ class WelcomeNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     public $message;
-    public $subject;
-    public $fromEmail;
-    public $mailer;
+    // public $subject;
+    // public $fromEmail;
+    // public $mailer;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct( $Message)
+    public function __construct($Message)
     {
         // $this->Message=$Message;
         // $this-> message="Welcome Our Customer";
@@ -61,7 +61,7 @@ class WelcomeNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            //  
         ];
     }
 }
