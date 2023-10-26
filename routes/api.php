@@ -4,6 +4,7 @@ use App\Http\Controllers\SendMailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -33,8 +34,8 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], f
    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::group(['middleware'=>['api', 'SetAppLang', 'role:admin'], 'prefix'=>'{locale}/auth/admin'], function ($router) {
-    Route::post('/Dashboard', [AdminController::class, 'Dashboard']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/profile', [AuthController::class, 'profile']);
+Route::group(['middleware'=>['api','can:do-everything', 'SetAppLang'], 'prefix'=>'{locale}/auth/admin'], function ($router) {
+    Route::post('/addFund', [AdminController::class, 'addFund']);
+    // Route::post('/login', [AuthController::class, 'login']);
+    // Route::get('/profile', [AuthController::class, 'profile']);
  });

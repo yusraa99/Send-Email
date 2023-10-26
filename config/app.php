@@ -185,6 +185,8 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
 
+        Cknow\Money\MoneyServiceProvider::class,
+
     ],
 
     /*
