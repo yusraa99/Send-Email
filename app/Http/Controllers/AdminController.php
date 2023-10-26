@@ -44,7 +44,7 @@ class AdminController extends Controller
                 return response()->json([
                     'message'=>'Project Successfully Created',
                     // 'project'=>$project,
-                    [
+                    'project'=>[
                         'project_name'=> $project->name,
                         'project_description'=> $project->description,
                         'project_total_price'=>number_format($project->total_price),
