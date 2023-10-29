@@ -31,6 +31,7 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], f
    Route::post('/register', [AuthController::class, 'register']);
    Route::post('/login', [AuthController::class, 'login']);
    Route::get('/profile', [AuthController::class, 'profile']);
+   Route::post('/invest', [AuthController::class, 'invest']);
    Route::post('/logout', [AuthController::class, 'logout']);
 });
 

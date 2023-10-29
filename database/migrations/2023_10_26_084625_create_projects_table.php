@@ -20,6 +20,7 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->decimal('total_price', 15, 2);
             $table->decimal('min_invest', 15, 2);
+            $table->decimal('invest_amount', 15, 2)->default(0);
             $table->timestamps();
         });
     }

@@ -10,6 +10,10 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Permission;
 use App\Enums\UserStatus;
+use App\Models\Project;
+use Illuminate\Support\Facades\DB;
+
+
 class AuthController extends Controller
 {
 
@@ -88,6 +92,44 @@ class AuthController extends Controller
     public function profile(){
         $user=auth()->user();
         return response()->json(['user'=>auth()->user(), $user->getPermissionsViaRoles()],200);
+
+    }
+    
+    public function invest(Request $request){
+        $user=auth()->user();
+
+        // DB::beginTransaction();
+        // DB::rollBack();
+        // DB::commit();
+        try {
+            $user=auth()->user();
+
+            DB::beginTransaction();
+
+            $user->transactions()->create([
+                'amount'=> $request['amount'],
+                'user_id'=> $user,
+                'project_id'=> $request['project_id'],
+            ]);
+            if ($request['amount'] < $user->balance) {
+                $user->decreaseBalance($request['amount']);
+                $prject=Project::where('id', $request['project_id'])->first();
+                $prject->increaseBalance($request['amount']);
+            }else {
+                return response()->json(
+                    ['message'=>'You Do Not Have Enough Balance'],);
+            }
+            
+            DB::commit();
+            return response()->json([
+                'message'=>'The Investing Successfully Done',
+                'user'=>auth()->user()],200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+        
 
     }
     

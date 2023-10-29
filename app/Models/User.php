@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Transactions;
 
 
 class User extends Authenticatable implements JWTSubject
@@ -25,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'status',
+        'balance',
     ];
 
     /**
@@ -63,5 +65,16 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function transactions() {
+        return $this->hasMany(Transactions::class, 'user_id');
+    }
+
+
+    public function decreaseBalance($amount){
+        $current_amount= $this->balance;
+
+        $this->update(['balance'=> $current_amount-$amount]);
     }
 }
