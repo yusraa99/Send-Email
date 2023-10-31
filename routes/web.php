@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\Hello;
+use App\Events\PrivateTest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SendMailController;
@@ -26,3 +28,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/send_emails', [SendMailController::class, 'form'])->name('send_emails_form');
 Route::post('/send_emails', [SendMailController::class, 'send_emails'])->name('send_emails');
+
+Route::get('/broadcast', function(){
+    Hello::dispatch();
+    return 'sent';
+});
+Route::get('/broadcast-private', function(){
+    $users=auth()->user();
+    // PrivateTest::dispatch($users);
+    broadcast(new PrivateTest($users));
+    return 'sent '.$users->email;
+    // return 'sent';
+});

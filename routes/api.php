@@ -1,11 +1,13 @@
 <?php
 
+use App\Events\Hello;
+use App\Events\PrivateTest;
 use App\Http\Controllers\SendMailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,25 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], f
 
 Route::group(['middleware'=>['api','can:do-everything', 'SetAppLang'], 'prefix'=>'{locale}/auth/admin'], function ($router) {
     Route::post('/addFund', [AdminController::class, 'addFund']);
+    // Route::post('/login', [AuthController::class, 'login']);
+    // Route::get('/profile', [AuthController::class, 'profile']);
+ });
+
+//  Route::get('/broadcast', function(){
+//     Hello::dispatch(); 
+//     return 'sent';});
+Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/broadcasting'], function ($router) {
+    Route::get('/broadcast', function(){
+        // Hello::dispatch();
+        broadcast(new Hello()); 
+        return 'sent';});
+    Route::get('/broadcast-private', function(){
+        // $user=User::
+        // Hello::dispatch(); 
+        $users=auth()->user();
+        // PrivateTest::dispatch($users);
+        broadcast(new PrivateTest($users));
+        return 'sent '.$users->email;});
     // Route::post('/login', [AuthController::class, 'login']);
     // Route::get('/profile', [AuthController::class, 'profile']);
  });
