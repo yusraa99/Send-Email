@@ -27,6 +27,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+Route::get('/caching', [App\Http\Controllers\CachingController::class, 'caching']);
+
+
 
 Route::get('/send_emails', [SendMailController::class, 'form'])->name('send_emails_form');
 Route::post('/send_emails', [SendMailController::class, 'send_emails'])->name('send_emails');

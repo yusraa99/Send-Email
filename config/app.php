@@ -244,6 +244,8 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTAuthFactory' => Tymon\JWTAuth\Facades\JWTAuthFactory::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+    
     ],
 
 ];

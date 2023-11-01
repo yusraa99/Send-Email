@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 use App\Models\User;
+use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,4 +65,10 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/broadcast
         return 'sent '.$users->email;});
     // Route::post('/login', [AuthController::class, 'login']);
     // Route::get('/profile', [AuthController::class, 'profile']);
+ });
+
+
+ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{local}/cach'], function(){
+    Route::get('/home', [HomeController::class, 'apiindex']);
+
  });
