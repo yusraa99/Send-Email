@@ -5,6 +5,8 @@ use App\Events\PrivateTest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SendMailController;
+use App\Http\Controllers\GoogleAuthController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,3 +42,16 @@ Route::get('/broadcast-private', function(){
     return 'sent '.$users->email;
     // return 'sent';
 });
+
+
+Route::get('auth/google', [GoogleAuthController::class, 'redirect']);
+Route::get('auth/google/callback', [GoogleAuthController::class, 'callbackGoogle']);
+
+Route::get('auth/facebook', [GoogleAuthController::class, 'facebookredirect']);
+Route::get('auth/facebook/callback', [GoogleAuthController::class, 'callbackFacebook']);
+
+Route::get('auth/github', [GoogleAuthController::class, 'githubredirect']);
+Route::get('auth/github/callback', [GoogleAuthController::class, 'callbackGithub']);
+
+Route::get('auth/twitter', [GoogleAuthController::class, 'twitterredirect']);
+Route::get('auth/twitter/callback', [GoogleAuthController::class, 'callbackTwitter']);

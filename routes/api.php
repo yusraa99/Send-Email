@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Models\User;
 
 /*
@@ -35,6 +36,8 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], f
    Route::get('/profile', [AuthController::class, 'profile']);
    Route::post('/invest', [AuthController::class, 'invest']);
    Route::post('/logout', [AuthController::class, 'logout']);
+   Route::get('auth/google', [GoogleAuthController::class, 'redirect']);
+   Route::get('auth/google/callback', [GoogleAuthController::class, 'callbackGoogle']);
 });
 
 Route::group(['middleware'=>['api','can:do-everything', 'SetAppLang'], 'prefix'=>'{locale}/auth/admin'], function ($router) {

@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Permission;
 use App\Enums\UserStatus;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
 
 
 class AuthController extends Controller
@@ -140,5 +141,43 @@ class AuthController extends Controller
         return response()->json([
             'message'=>__('auth.Logout')
         ]);
+    }
+
+    public function redirect() {
+        return Socialite::driver('google')->redirect();
+    }
+    
+    
+    public function callbackGoogle() {
+        try {
+            $google_user = Socialite::driver('google')->user();
+
+            $user = User::where('google_id', $google_user->getId())->first();
+
+            if (!$user) {
+                DB::beginTransaction();
+                $new_user = User::create([
+                    'name'=>$google_user->getName(),
+                    'email'=>$google_user->getEmail(), 
+                    'google_id'=>$google_user->getId()
+                ]);
+
+                // AuthController::login($new_user);
+                $this->login($new_user);
+                return response()->json([
+                    'message'=>'Welcome In Our Website', 
+                    'user'=>auth()->user(),
+                ]);
+                 
+            DB::commit();
+            }else {
+                $this->login($user);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message'=>'Unauthorized', 
+            ]);
+            throw $th;
+        }
     }
 }
