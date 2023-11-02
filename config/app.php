@@ -187,6 +187,8 @@ return [
 
         Cknow\Money\MoneyServiceProvider::class,
 
+        \Spatie\Varnish\VarnishServiceProvider::class,
+
     ],
 
     /*

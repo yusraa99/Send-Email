@@ -20,6 +20,7 @@
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-permission": "^5.11",
+        "spatie/laravel-varnish": "^2.9",
         "tymon/jwt-auth": "^1.0@dev"
     },
     "require-dev": {
