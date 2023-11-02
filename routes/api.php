@@ -68,7 +68,7 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/broadcast
  });
 
 
- Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{local}/cach'], function(){
-    Route::get('/home', [HomeController::class, 'apiindex']);
+//  Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{local}/cach'], function(){
+//     Route::get('/home', [HomeController::class, 'apiindex']);
 
- });
+//  });

@@ -17,11 +17,11 @@ class CachingController extends Controller
         // Cache::forget('key2');
         // Cache::flush();
 
-        Redis::set('Users', User::all());
+        // Redis::set('Users', User::all());
 
-        for ($i=0; $i < Redis::keys('Users'); $i++) { 
-            dd(Redis::get('Users'));
-        }
+        // for ($i=0; $i < Redis::keys('Users'); $i++) { 
+        //     dd(Redis::get('Users'));
+        // }
         // dd(Cache::get('CachKey'));
     }
 }
