@@ -115,9 +115,9 @@ return [
         ],
 
         'custom' => [
-            'driver' => 'stack',
-            'channels' => ['single'],
-            'ignore_exceptions' => false,
+            'driver' => 'single',
+            'path' => storage_path('logs/custom.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
         ],
     ],
 
