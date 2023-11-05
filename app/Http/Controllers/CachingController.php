@@ -29,7 +29,7 @@ class CachingController extends Controller
 
     public function loggingTest(){
         $data=[];
-        $data=Log::channel('custom')->info("Hello Testing");
+        Log::channel('custom')->info("Hello Testing");
         // info("Hello Testing");
         // return response()->json([
         //     'message'=>'successful',

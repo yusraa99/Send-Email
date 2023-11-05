@@ -92,7 +92,9 @@ class AuthController extends Controller
 
     public function profile(){
         $user=auth()->user();
-        return response()->json(['user'=>auth()->user(), $user->getPermissionsViaRoles()],200);
+        $user_json=$user->toJson();
+        $user_json=json_decode($user_json);
+        return response()->json(['user'=>auth()->user(),'userJSON'=>$user_json, $user->getPermissionsViaRoles()],200);
 
     }
     
