@@ -44,6 +44,7 @@ Route::group(['middleware'=>['api', 'SetAppLang'], 'prefix'=>'{locale}/auth'], f
 
 Route::group(['middleware'=>['api','can:do-everything', 'SetAppLang'], 'prefix'=>'{locale}/auth/admin'], function ($router) {
     Route::post('/addFund', [AdminController::class, 'addFund']);
+    Route::post('/index', [AdminController::class, 'index']);
     // Route::post('/login', [AuthController::class, 'login']);
     // Route::get('/profile', [AuthController::class, 'profile']);
  });

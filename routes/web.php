@@ -23,15 +23,16 @@ use App\Http\Controllers\GoogleAuthController;
 Auth::routes();
 
 
-Route::group(['middleware'=>'cacheable'], function() {
+// Route::group(['middleware'=>'cacheable'], function() {
     Route::get('/', function () {
         return view('welcome');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-});
+// });
 Route::get('/caching', [App\Http\Controllers\CachingController::class, 'caching']);
+Route::get('/loggingTest', [App\Http\Controllers\CachingController::class, 'loggingTest']);
 
 
 

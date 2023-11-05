@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class CachingController extends Controller
@@ -23,5 +24,14 @@ class CachingController extends Controller
         //     dd(Redis::get('Users'));
         // }
         // dd(Cache::get('CachKey'));
+    }
+
+
+    public function loggingTest(){
+        Log::info("Hello Testing");
+        // return response()->json([
+        //     'message'=>'successful',
+        // ]);
+        return view('welcome');
     }
 }

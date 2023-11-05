@@ -6,6 +6,7 @@ use App\Models\Project;
 use Validator; 
 use Illuminate\Http\Request;
 use Cknow\Money\Money;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -56,5 +57,12 @@ class AdminController extends Controller
             }
         
     }
+
+    // public function index(Request $request) {
+    //     Log::info("Admin Dashboard");
+    //     return response()->json([
+    //         'message'=>'successful',
+    //     ]);
+    // }
     
 }
